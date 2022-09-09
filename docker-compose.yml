@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  sandbox:
+    build: 
+      args:
+        PROJECT: "sandbox"
+      context: .
+      dockerfile: Dockerfile-ruby-js.dev
+    hostname: sandbox
+    stdin_open: true # docker run -i
+    tty: true # docker run -t
+    secrets:
+      - id_rsa
+      - gpg_passphrase
+      - gpg_private_key
+    volumes:
+      - ./projects/sandbox:/home/dev/src
+  jump:
+    build:
+      args:
+        PROJECT: jump
+      context: .
+      dockerfile: Dockerfile-ruby-js.dev
+    hostname: jump
+    # Not going to start Rails - starting an interactive container
+    # to mount VSCode server to for development
+    stdin_open: true # docker run -i
+    tty: true # docker run -t
+    secrets:
+      - id_rsa
+      - gpg_passphrase
+      - gpg_private_key
+    ports:
+      - "2222:22"
+secrets:
+  id_rsa:
+    file: .secrets/id_rsa
+  gpg_passphrase:
+    file: .secrets/gpg_passphrase
+  gpg_private_key:
+    file: .secrets/gpg_private_key

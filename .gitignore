@@ -1,0 +1,10 @@
+#Secrets File
+.secrets/*
+!.secrets/README.md
+
+#src - projects
+projects/*
+!projects/README.md
+!projects/sandbox/
+!projects/sandbox/README.md
+projects/sandbox/*
