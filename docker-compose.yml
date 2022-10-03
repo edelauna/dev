@@ -6,7 +6,7 @@ services:
       args:
         PROJECT: "sandbox"
       context: .
-      dockerfile: Dockerfile-ruby-js.dev
+      dockerfile: Dockerfile-ruby-js-dev
     hostname: sandbox
     stdin_open: true # docker run -i
     tty: true # docker run -t
@@ -15,13 +15,13 @@ services:
       - gpg_passphrase
       - gpg_private_key
     volumes:
-      - ./projects/sandbox:/home/dev/src
+      - ./projects/sandbox:/home/dev/sandbox
   jump:
     build:
       args:
         PROJECT: jump
       context: .
-      dockerfile: Dockerfile-ruby-js.dev
+      dockerfile: Dockerfile-ruby-js-dev
     hostname: jump
     # Not going to start Rails - starting an interactive container
     # to mount VSCode server to for development
