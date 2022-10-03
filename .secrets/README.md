@@ -12,6 +12,6 @@ GPG can be used to to sign commits so that they are verified. Create a GPG key b
 
 Note: This setup automates passphrase input by configuring GPG-Agent. Both `gpg_private_key` and `gpg_passphrase` are required, otherwise docker containers will hang waiting for input.
 
-* After you've exported your public key and saved it to Github. Export your private key to this folder via: `gpg --export-secret-keys --armor -o gpg_private_key`
+* After you've exported your public key and saved it to Github. Export your private key to this folder via: `gpg --output gpg_private_key --armor --export-secret-key ${emailInKey}`
 
 * Add your private keys passphrase via vim or `echo "$MY_PASSPHRASE" > gpg_passphrase`

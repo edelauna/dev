@@ -12,9 +12,9 @@ COLOURS=("$GREEN" "$YELLOW" "$ORANGE" "$RED" "$BLUE" "$MAGENTA")
 
 size=${#COLOURS[@]}
 index=$((RANDOM % size))
-REPOC="${COLOURS[$index]}${REPO^^}${NO_COLOUR}:::"
+REPOC="${COLOURS[$index]}${PROJECT^^}${NO_COLOUR}:::"
 
-REPO_SETUP_PATH="/home/dev/.${REPO}setup"
+REPO_SETUP_PATH="/home/dev/.${PROJECT}setup"
 echo -e "⏱⏱⏱  STATUS: $REPOC Initiatizing at: $REPO_SETUP_PATH  ⏱⏱⏱"
 
 echo -e "${RED}=======================================\n${NO_COLOUR}\
@@ -137,7 +137,7 @@ default_entry() {
         [ -f /run/secrets/gpg_private_key ] && gpg_setup
 
         # Update .zlogin to move immediately to proj dir o login
-        echo "cd /home/dev/${REPO}" >>.zlogin
+        echo "cd /home/dev/${PROJECT}" >>.zlogin
 
         touch .setup
 
