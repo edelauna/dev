@@ -33,6 +33,14 @@ services:
       - gpg_private_key
     ports:
       - "2222:22"
+  postgres:
+    image: postgres@sha256:afc79f5499a589f3130bd8666c1743db6748aa43083b52f823db72dd3af89785
+    hostname: postgres
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_HOST_AUTH_METHOD=trust
 secrets:
   id_rsa:
     file: .secrets/id_rsa
