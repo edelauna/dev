@@ -1,13 +1,13 @@
 version: "3.9"
 
 services:
-  sandbox:
+  src:
     build: 
       args:
-        PROJECT: "sandbox"
+        PROJECT: "src"
       context: .
-      dockerfile: Dockerfile-ruby-js-dev
-    hostname: sandbox
+      dockerfile: Dockerfile-dev
+    hostname: dev
     stdin_open: true # docker run -i
     tty: true # docker run -t
     secrets:
@@ -15,32 +15,7 @@ services:
       - gpg_passphrase
       - gpg_private_key
     volumes:
-      - ./projects/sandbox:/home/dev/sandbox
-  jump:
-    build:
-      args:
-        PROJECT: jump
-      context: .
-      dockerfile: Dockerfile-ruby-js-dev
-    hostname: jump
-    # Not going to start Rails - starting an interactive container
-    # to mount VSCode server to for development
-    stdin_open: true # docker run -i
-    tty: true # docker run -t
-    secrets:
-      - id_rsa
-      - gpg_passphrase
-      - gpg_private_key
-    ports:
-      - "2222:22"
-  postgres:
-    image: postgres@sha256:afc79f5499a589f3130bd8666c1743db6748aa43083b52f823db72dd3af89785
-    hostname: postgres
-    environment:
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_DB=postgres
-      - POSTGRES_HOST_AUTH_METHOD=trust
+      - ./projects/src:/home/dev/.sync
 secrets:
   id_rsa:
     file: .secrets/id_rsa
