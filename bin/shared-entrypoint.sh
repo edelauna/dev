@@ -115,12 +115,20 @@ default_ruby_setup() {
 
 default_entry() {
 
-    # Some dev setup
-    echo -e "⏱⏱⏱  STATUS: $REPOC File Sync Initiazing ⏱⏱⏱"
-    sudo chown -R dev:dev /home/dev
+    # Update cached content
+    sudo cp -r /home/dev/.sync/. "/home/dev/${PROJECT}"
 
     # Check if dev user has been setup - if not run shared-setup
     if [ ! -f /home/dev/.setup ]; then
+        
+        # Simplesync setup
+        sudo chmod +x /home/dev/.local/bin/simplesync \
+				/home/dev/.local/bin/shared-entrypoint.sh
+        touch /home/dev/.simplesync_exclude
+        
+        echo -e "⏱⏱⏱  STATUS: $REPOC File Sync Initiazing ⏱⏱⏱"
+        sudo chown -R dev:dev /home/dev
+        
         cd /home/dev/ || exit 1
         mkdir -p ".ssh"
 
@@ -163,7 +171,8 @@ export_runtime_envvars() {
 fin() {
     echo -e "⏱⏱⏱  STATUS: $REPOC Starting SSH Server  ⏱⏱⏱"
     gpg_run
+    /home/dev/.local/bin/simplesync /home/dev/"${PROJECT}"/ /home/dev/.sync/ &
     # Start SSH to be able to move between containers
     sudo service ssh restart
-    # echo -e "[${GREEN}✓${NO_COLOUR}] STATUS: $REPOC READY!"
+    echo -e "[${GREEN}✓${NO_COLOUR}] STATUS: $REPOC READY!"
 }

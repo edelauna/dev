@@ -1,0 +1,20 @@
+#!/bin/bash
+
+##making this global for now - add to array to exlude more
+SIMPLESYNC_EXCLUDED_FILE="/home/dev/.simplesync_exclude"
+
+[ ! -d "$1" ] && echo "Exiting Sync - missing $1" && exit 1
+[ ! -d "$2" ] && echo "Exiting Sync - missing $2" && exit 2
+
+# From container to mounted volume
+while inotifywait -r -e modify,create,delete,move "$1"; do
+    sudo -i -u dev rsync --delete -rlptgoDvz --exclude-from=$SIMPLESYNC_EXCLUDED_FILE "$1" "$2" | sudo tee -a /home/dev/.local/rsync_"$REPO".log
+done
+
+# From mounted volume to container
+### Removing this for now - as contents created when container
+### is spun up. 
+# Difference is we won't preserve the group or owner
+#while inotifywait -r -e modify,create,delete,move "$2"; do
+#    sudo -i -u dev rsync  --delete -rlptDvz "$2" "$1"
+#done

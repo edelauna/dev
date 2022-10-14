@@ -99,6 +99,7 @@ COPY projects/${PROJECT} /home/dev/${PROJECT}/
 COPY --chmod=0755 bin/${PROJECT}/docker-entrypoint.sh .local/bin/docker-entrypoint.sh
 COPY --chmod=0755 bin/${PROJECT}/docker-setup.sh .local/bin/docker-setup.sh
 COPY --chmod=0755 bin/shared-entrypoint.sh .local/bin/shared-entrypoint.sh
+COPY --chmod=0755 bin/simplesync .local/bin/simplesync
 
 # Run project specialized setups
 RUN sudo chown -R dev:dev /home/dev
